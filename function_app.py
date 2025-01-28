@@ -5,8 +5,8 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 @app.route(route="HttpExample")
 @app.queue_output(arg_name="msg", queue_name="outqueue", connection="AzureWebJobsStorage")
-def HttpExample(req: func.HttpRequest, msg: func.Out [func.QueueMessage]) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+def HttpExample(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> func.HttpResponse:
+    logging.info('Updated Python HTTP trigger function processed a request.')
 
     name = req.params.get('name')
     if not name:
@@ -19,9 +19,9 @@ def HttpExample(req: func.HttpRequest, msg: func.Out [func.QueueMessage]) -> fun
 
     if name:
         msg.set(name)
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+        return func.HttpResponse(f"Hello, {name}. This is an UPDATED response from the function.")
     else:
         return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             "This is an UPDATED HTTP triggered function. Pass a name in the query string or request body.",
              status_code=200
         )
